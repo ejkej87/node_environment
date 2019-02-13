@@ -5,7 +5,8 @@ var EventEmitter = require('events').EventEmitter;
 var emitter = new EventEmitter();
 var StatMode = require('stat-mode');
 var fs = require('fs');
-
+var http = require('http');
+var server = http.createServer();
 
 var emitter = new EventEmitter();
 emitter.on("beforeCommand", function (instruction) {
@@ -73,7 +74,20 @@ fs.readFile('./read.txt', 'utf-8', function (err, data) {
    });
 });
 
+http
 
+server.on('request', function (request, response) {
+         var html = fs.readFile('./index.html', function (err, html) {
+            response.setHeader("Content-Type", "text/html; charset=utf-8");
+            if (request.method === 'GET' && request.url === '/hello') {
+               response.write('<h1>Hello World!</h1>');
+               response.end();
+            } else {
+               response.statusCode = 404;
+               response.write('<img src="https://zawodbloger.pl/wp-content/uploads/2018/08/404.png">');
+               response.end();
+            };
+         });
+      });
 
-
-
+server.listen(8061);
