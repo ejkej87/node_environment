@@ -74,7 +74,7 @@ fs.readFile('./read.txt', 'utf-8', function (err, data) {
    });
 });
 
-http
+//http
 
 server.on('request', function (request, response) {
          var html = fs.readFile('./index.html', function (err, html) {
